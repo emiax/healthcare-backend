@@ -46,7 +46,7 @@ class Session {
 
 
   /*
-   * Creates a new channel or uses the channel specified in $_REQUEST['channel']
+   * Creates a new channel or uses the channel specified in 'id'
    */
   private function startChannel($id) {
     $this->channelId = null;
@@ -138,6 +138,9 @@ class Session {
   }
 
 
+  /*
+   * Return singleton instance
+   */
   public static function getInstance() {
     return self::$instance;
   }
