@@ -81,7 +81,7 @@ var connection = (function () {
                     if (s) {
                         s.callback(v);
                     } else if (c) {
-                        c();
+                        c(v);
                     }
                 });
             }
@@ -103,10 +103,10 @@ var connection = (function () {
         }
     };
 
-    that.get = function(action, args, callback) {
-        that.getMultiple([{action: action,
-                           args: args,
-                           callback: callback
+    that.get = function(a) {
+        that.getMultiple([{action: a.action,
+                           args: a.args,
+                           callback: a.callback
                           }]);
     };
 

@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
   <head>
-    <title>Game controller</title>
+    <title>Sample html client</title>
     <meta charset="utf-8" />
     <script src="http://code.jquery.com/jquery-1.5.min.js" type="text/javascript"></script>
     <script src="connection.js"></script>
@@ -10,7 +10,6 @@
      <script>
        
        //subscribe to some piece of information
-
        var sub = connection.subscribe({
          action: 'usersOnline',
          args: {},
@@ -20,12 +19,20 @@
        });
 
 
-       // unsubscribe
-
+       // unsubscribe after a while
        setTimeout(function () {
            sub.unsubscribe();
        }, 25000);
 
+
+       // get information NOW!
+       connection.get({
+         action: 'usersOnline',
+         args: {},
+         callback: function (data) {
+            console.log("Initially there were " + data.foo + " users online");
+         }
+       });
 
      </script>
    </body>
