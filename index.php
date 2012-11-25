@@ -38,24 +38,20 @@ $session = Session::start($channelId);
  */
 
 
-//$_REQUEST['get'] = '{"3": {"action":"usersOnline","args":{},"lazy":false}}';
-
 $requests = isset($_REQUEST['get']) ? (array) json_decode($_REQUEST['get']) : array();
 $responses = array();
 
 
-//print_r($lazyRequests);
-
 /*
  * Make a request to a controller.
- * if forceResponse is false, the controller may refuse to carry out the whole request
+ * if lazy is true, the controller may refuse to carry out the whole request
  * if it realizes that there has been no interesting state change since last time the request was performed.
  */
-function makeRequest($req, $forceResponse) {
+function makeRequest($req, $lazy) {
   $className = ucfirst($req->action) . "Controller";
   if (class_exists($className)) {
     $c = new $className();
-    return $c->output($req->args, $forceResponse);
+    return $c->output($req->args, $lazy);
   }
   die(json_encode(array("error" => "no such operation")));
 }
