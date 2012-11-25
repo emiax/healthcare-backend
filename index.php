@@ -4,9 +4,12 @@ error_reporting(E_ALL);
 ini_set("display_errors", 1);
 
 include 'session.php';
-include 'loginController.php';
-include 'usersOnlineController.php';
+include 'controllers/loginController.php';
+include 'controllers/usersOnlineController.php';
 
+/*
+ * Setup session and channel
+*/
 
 $channelId = null;
 if (isset($_REQUEST['channel'])) {
@@ -16,86 +19,67 @@ if (isset($_REQUEST['channel'])) {
 $session = Session::start($channelId);
 
 
-
 /*
  * Sample input:
- *
- * get = [
- *  { "action": "login",
+ * channel = 71,
+ * get = {
+ *  "1": { "action": "login",
  *    "args": {"username": "johndoe", "password": "trollolloll"}
  *  }, 
- *  { "action": "doSomethingElse",
+ *  "2": { "action": "doSomethingElse",
  *    "args": {"foo": "baz"}
  *  }
- * ],
- * subscribe = [
- *  { "action": "getSchedule",
+ *  "3": { "action": "getSchedule",
  *    "args": {"day": 10, "month": 2, "year": 2012}
- *  }
- * ]
+ *    "lazy": true
+ *   }
+ * }
  *
  */
 
 
-//$_REQUEST['subscribe'] = '[{"action":"getOnlineUsers","args":{}}]';
+//$_REQUEST['get'] = '{"3": {"action":"usersOnline","args":{},"lazy":false}}';
 
-$once = isset($_REQUEST['get']) ? json_decode($_REQUEST['get']) : array();
-$newSubscriptions = isset($_REQUEST['subscribe']) ? json_decode($_REQUEST['subscribe']) : null;
-
-$forcedRequests = array();
-$lazyRequests = array();
-
-if ($newSubscriptions) {
-  $session->setSubscriptions($newSubscriptions);
-  $forcedRequests = array_merge($once, $newSubscriptions);
-} else {
-  $forcedRequests = $once;
-  $lazyRequests = array_diff($session->getSubscriptions(), $forcedRequests);
-}
-
-//print_r($forcedRequests);
-//print_r($lazyRequests);
-
+$requests = isset($_REQUEST['get']) ? (array) json_decode($_REQUEST['get']) : array();
 $responses = array();
 
 
+//print_r($lazyRequests);
+
 /*
- * Makes a request to a controller.
+ * Make a request to a controller.
  * if forceResponse is false, the controller may refuse to carry out the whole request
  * if it realizes that there has been no interesting state change since last time the request was performed.
  */
 function makeRequest($req, $forceResponse) {
-
-  $c = null;
-  switch($req->action) {
-  case 'logIn': 
-    $c = new LoginController();
-    break;
-  case 'getOnlineUsers':
-    $c = new UsersOnlineController();
-    break;
-  }
-  if ($c) {
+  $className = ucfirst($req->action) . "Controller";
+  if (class_exists($className)) {
+    $c = new $className();
     return $c->output($req->args, $forceResponse);
   }
+  die(json_encode(array("error" => "no such operation")));
 }
 
-foreach($forcedRequests as $k => $req) {
-  $res = makeRequest($req, true);
+
+foreach($requests as $k => $req) {
+  $lazy = isset($req->lazy) && $req->lazy;
+  $res = makeRequest($req, $lazy);
   if ($res) {
-    $session->updateState(json_encode($req), json_encode($res));
-    $responses[$k] = $res;
+    if ($lazy) {
+      if ($session->updateState(json_encode($req), json_encode($res))) {
+        $responses[$k] = $res;
+      }
+    } else {
+      $session->updateState(json_encode($req), json_encode($res));
+      $responses[$k] = $res;
+    }
   }
 }
 
-foreach($lazyRequests as $k => $req) {
-  $res = makeRequest($req, false);
-  if ($res && $session->updateState(json_encode($req), json_encode($res))) {
-    $responses[$k] = $res;
-  }
-}
+$json = array();
+$json['channel'] = $session->getChannelId();
+$json['response'] = $responses;
 
-$responses['channel'] = $session->getChannelId();
 $session->close();
 
-echo json_encode($responses);
+echo json_encode($json);

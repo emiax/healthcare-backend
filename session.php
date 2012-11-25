@@ -57,14 +57,13 @@ class Session {
       $channelId = $id;
     }
 
-    if (!is_numeric($channelId)) {
+    if (!is_numeric($channelId) || $channelId < 1) {
       $channelId = $this->nextChannelId++;      
     }
     
     if (!isset($channels[$channelId])) {
       $channel = &$channels[$channelId];
       $channel = array(
-                       'subscriptions' => array(),
                        'stateHashes' => array()
                        );
       
@@ -75,15 +74,15 @@ class Session {
   /*
    * Set subscriptions
    */
-  public function setSubscriptions($subs) {
+  /*  public function setSubscriptions($subs) {
     $this->channels[$this->channelId]['subscriptions'] = array_unique($subs);
-  }
+    }*/
 
 
   /*
    * Get subscriptions
    */
-  public function getSubscriptions() {
+  /*  public function getSubscriptions() {
     $channel = &$this->channels[$this->channelId];
     if (isset($channel['subscriptions'])) {
       return $channel['subscriptions'];
@@ -91,7 +90,7 @@ class Session {
       return array();
     }
   }
-
+  */
 
   /*
    * Update state

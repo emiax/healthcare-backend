@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Game controller</title>
+    <meta charset="utf-8" />
+    <script src="http://code.jquery.com/jquery-1.5.min.js" type="text/javascript"></script>
+    <script src="connection.js"></script>
+   </head>
+   <body>
+     <script>
+       
+       //subscribe to some piece of information
+
+       var sub = connection.subscribe({
+         action: 'usersOnline',
+         args: {},
+         callback: function (data) {
+           console.log(data.foo + " users are online");
+         }
+       });
+
+
+       // unsubscribe
+
+       setTimeout(function () {
+           sub.unsubscribe();
+       }, 25000);
+
+
+     </script>
+   </body>
+</html>
