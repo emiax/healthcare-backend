@@ -94,6 +94,7 @@ var connection = (function () {
             $.ajax({
                 url: 'index.php',
                 dataType: 'json',
+                type: 'POST',
                 data: {
                     channel: channel,
                     get: JSON.stringify(data)
