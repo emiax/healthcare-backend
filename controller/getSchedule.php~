@@ -1,9 +1,0 @@
-<?php
-
-class GetSchedule {
-  
-  public function action() {
-    
-  }
-
-}
