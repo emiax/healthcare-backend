@@ -5,10 +5,22 @@
     <meta charset="utf-8" />
     <script src="http://code.jquery.com/jquery-1.5.min.js" type="text/javascript"></script>
     <script src="connection.js"></script>
+    <script src="debug.js"></script>
    </head>
    <body>
      <script>
        
+       //login!
+       connection.request({
+         action: 'logIn',
+         args: {userName: 'emiax', password: 'test'},
+         callback: function (data) {
+            console.log(data);
+         }
+       });
+
+
+
        //subscribe to some piece of information
        var sub = connection.subscribe({
          action: 'usersOnline',
@@ -19,21 +31,25 @@
        });
 
 
+       // change subscription
+       setTimeout(function () {
+         sub.args = {
+            filter: 'active'
+         };
+       }, 15000);
+
+
        // unsubscribe after a while
        setTimeout(function () {
            sub.unsubscribe();
-       }, 25000);
+       }, 50000);
 
 
-       // get information NOW!
-       connection.get({
-         action: 'usersOnline',
-         args: {},
-         callback: function (data) {
-            console.log("Initially there were " + data.foo + " users online");
-         }
-       });
 
      </script>
+     <input id="action"></input>
+     <textarea id="args"></textarea>
+     <button id="send">Skicka</button>
+     <div id="response"></div>       
    </body>
 </html>

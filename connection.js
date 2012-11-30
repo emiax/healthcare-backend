@@ -36,7 +36,7 @@ var connection = (function () {
        callback: function
      ]
      */
-    that.getMultiple = function(a, onSuccess) {
+    that.requestMultiple = function(a, onSuccess) {
         var callbacks = {},
             data = {};
 
@@ -97,15 +97,15 @@ var connection = (function () {
                 type: 'POST',
                 data: {
                     channel: channel,
-                    get: JSON.stringify(data)
+                    request: JSON.stringify(data)
                 },
                 success: onResponse
             });
         }
     };
 
-    that.get = function(a) {
-        that.getMultiple([{action: a.action,
+    that.request = function(a) {
+        that.requestMultiple([{action: a.action,
                            args: a.args,
                            callback: a.callback
                           }]);
@@ -115,7 +115,7 @@ var connection = (function () {
         if (!begunPolling) {
             (function f () {
                 setTimeout(function () {
-                    that.getMultiple([], f);
+                    that.requestMultiple([], f);
                 }, interval);
             })();
             begunPolling = true;

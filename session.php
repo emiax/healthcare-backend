@@ -72,25 +72,28 @@ class Session {
 
 
   /*
-   * Set subscriptions
+   * Set user id. User id = 0 means no user is logged in
    */
-  /*  public function setSubscriptions($subs) {
-    $this->channels[$this->channelId]['subscriptions'] = array_unique($subs);
-    }*/
+  public function setUserName($userName) {
+    $this->userName = $userName;
+  }
+  
+
+  /*
+   * Get user id
+   */
+  public function getUserName() {
+    return $this->userName;
+  }
 
 
   /*
-   * Get subscriptions
+   * Clear channels and all their states
    */
-  /*  public function getSubscriptions() {
-    $channel = &$this->channels[$this->channelId];
-    if (isset($channel['subscriptions'])) {
-      return $channel['subscriptions'];
-    } else {
-      return array();
-    }
+  public function clearChannels() {
+    $this->channels = array();
   }
-  */
+
 
   /*
    * Update state

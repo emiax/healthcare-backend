@@ -3,9 +3,16 @@
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
 
+include 'dbConnection.php';
+include 'model/employeeMapper.php';
+
 include 'session.php';
-include 'controllers/loginController.php';
-include 'controllers/usersOnlineController.php';
+
+
+include 'controller/controller.php';
+include 'controller/logIn.php';
+include 'controller/usersOnline.php';
+include 'controller/getSchedule.php';
 
 /*
  * Setup session and channel
@@ -38,7 +45,7 @@ $session = Session::start($channelId);
  */
 
 
-$requests = isset($_REQUEST['get']) ? (array) json_decode($_REQUEST['get']) : array();
+$requests = isset($_REQUEST['request']) ? (array) json_decode($_REQUEST['request']) : array();
 $responses = array();
 
 
@@ -48,10 +55,10 @@ $responses = array();
  * if it realizes that there has been no interesting state change since last time the request was performed.
  */
 function makeRequest($req, $lazy) {
-  $className = ucfirst($req->action) . "Controller";
+  $className = ucfirst($req->action);
   if (class_exists($className)) {
     $c = new $className();
-    return $c->output($req->args, $lazy);
+    return $c->action($req->args, $lazy);
   }
   die(json_encode(array("error" => "no such operation")));
 }
@@ -62,11 +69,11 @@ foreach($requests as $k => $req) {
   $res = makeRequest($req, $lazy);
   if ($res) {
     if ($lazy) {
-      if ($session->updateState(json_encode($req), json_encode($res))) {
+      if ($session->updateState($k, json_encode($res))) {
         $responses[$k] = $res;
       }
     } else {
-      $session->updateState(json_encode($req), json_encode($res));
+      $session->updateState($k, json_encode($res));
       $responses[$k] = $res;
     }
   }
