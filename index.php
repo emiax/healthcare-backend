@@ -5,6 +5,8 @@ ini_set("display_errors", 1);
 
 include 'dbConnection.php';
 include 'model/employeeMapper.php';
+include 'model/visitMapper.php';
+include 'model/reportMapper.php';
 
 include 'session.php';
 
@@ -12,7 +14,11 @@ include 'session.php';
 include 'controller/controller.php';
 include 'controller/logIn.php';
 include 'controller/usersOnline.php';
+include 'controller/getEmployees.php';
 include 'controller/getSchedule.php';
+include 'controller/addReport.php';
+include 'controller/getReports.php';
+
 
 /*
  * Setup session and channel

@@ -81,10 +81,6 @@ class EmployeeMapper {
 
     $q .= implode(', ', array_map(function ($a) { return ":$a"; }, array_keys($employee)));    
 
-    //    foreach(self::$columns as $k) {
-    //  $q .= ":$k";
-    // }
-
     $q .= ");";
     return $db->query($q, $employee);    
   }
@@ -98,7 +94,10 @@ class EmployeeMapper {
     $filter = array_intersect_key($filter, array_flip(self::$columns));
     $db = DbConnection::getInstance();
     
-    $q = 'SELECT ' . implode(', ', self::$columns) . ' FROM employee WHERE 1 ';
+    $publicColumns = array_diff(self::$columns, array('password'));
+
+    
+    $q = 'SELECT ' . implode(', ', $publicColumns) . ' FROM employee WHERE 1 ';
     
     if (isset($filter['password'])) {
       if (isset($filter['userName'])) {
@@ -112,9 +111,13 @@ class EmployeeMapper {
       $q .= "AND $k = :$k ";
       $values[$k] = $v;
     }
-        
+    
     $ret = $db->query($q, $filter);
-    return $ret;
+    if (is_array($ret)) {
+      return $ret;
+    } else {
+      return array();
+    }
   }
 
   public function getEmployee($userName) {
@@ -124,6 +127,16 @@ class EmployeeMapper {
       return $employee;
     }
   }
+
+  public function getNotes($userName) {
+    $q = 'SELECT id, text from note WHERE employee = :userName';
+    $db = DbConnection::getInstance();
+    
+    return $db->query($q, array("userName" => $userName));
+  }
+
+  
+
 
 
 }

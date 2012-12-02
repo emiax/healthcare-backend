@@ -25,6 +25,7 @@ class LogIn {
         $employee = $employees[0];
         $session->setUserName($userName);
         
+
         return array(
                      'success' => true,
                      'userName' => $employee['userName'],

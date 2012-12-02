@@ -1,0 +1,69 @@
+CARE GIVER APPLICATION
+
+-- pull
+
+getSchedule (of employee) DONE
+    filter by date
+              (today)
+              past
+              patient
+              future
+    
+
+    
+getEmployees
+
+addReport
+    status
+    text
+    visit (if null, a general report will be created, otherwise a visit report)
+    
+getBehaviour
+    hourly
+    daily
+    monthly
+    body parts
+
+   
+getReports
+    filter/sort by date
+                   employee
+                   critical
+
+getCriticalEvents
+    filter by id
+              patient
+              date
+    both rgb and shadow urls are served if permission is granted
+
+logIn
+    userName
+    password
+setStatus
+    status (busy, free, offDuty)
+        
+registerEmployee
+registerPatient
+
+
+
+
+-- push
+
+emergencyCall
+              QUESTION??
+                    how to handle accept/deny emergency calls
+
+
+
+CARE CENTER APPLICATION
+
+-- pull
+
+getPatients
+addVisit
+
+
+
+    
+
