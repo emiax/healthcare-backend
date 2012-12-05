@@ -10,6 +10,8 @@ var connection = (function () {
     
     var channel = -1;
 
+    var hasFocus = true;
+
     that.subscribe = function (a) {
         var id = nextId,
             s = {
@@ -114,18 +116,30 @@ var connection = (function () {
     that.beginPolling = function(interval) {
         if (!begunPolling) {
             (function f () {
-                setTimeout(function () {
-                    that.requestMultiple([], f);
-                }, interval);
+                if (hasFocus) {
+                    setTimeout(function () {
+                        that.requestMultiple([], f);
+                    }, interval);
+                } else {
+                    setTimeout(f, interval);
+                }
             })();
             begunPolling = true;
         }
     }
 
+    $(document).ready(function() {
+        $(window).focus(function() {
+            hasFocus = true;
+        });
+        
+        $(window).blur(function() {
+            hasFocus = false;
+        });
+    });
 
     return that;
-    
-})();
 
+})();
 
 connection.beginPolling(5000);

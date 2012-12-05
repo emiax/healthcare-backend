@@ -1,8 +1,8 @@
 <?php
 
-class GetEmployees {
+class GetEmployees implements Controller {
   
-  public function action($args) {
+  public function action($args, $lazy) {
     
     $session = Session::getInstance();
     if (!$session->getUserName()) {

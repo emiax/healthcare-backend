@@ -17,5 +17,5 @@ class GetReports {
     return $em->getReports($filter, $order);
     
   }
-  
+
 }

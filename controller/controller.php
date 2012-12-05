@@ -1,6 +1,6 @@
 <?php
 interface Controller {
   
-  public function action();
+  public function action($args, $lazy = false);
   
 }

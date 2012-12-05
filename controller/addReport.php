@@ -1,8 +1,8 @@
 <?php
 
-class AddReport {
+class AddReport implements Controller {
   
-  public function action($args) {
+  public function action($args, $lazy = false) {
     $session = Session::getInstance();
     $rm = ReportMapper::getInstance();
     

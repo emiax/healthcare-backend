@@ -27,6 +27,7 @@ getBehaviour
    
 getReports
     filter/sort by date
+                   patient
                    employee
                    critical
 

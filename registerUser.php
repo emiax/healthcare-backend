@@ -12,8 +12,8 @@ include 'session.php';
 echo "Registering!";
 $c = new RegisterEmployee();
 print_r($c->action((object) array(
-                          'userName' => 'emiax',
+                          'userName' => 'tomfo',
                           'password' => 'test',
-                          'firstName' => 'Emil',
-                          'lastName' => 'Axelsson'
+                          'firstName' => 'Tomas',
+                          'lastName' => 'Forsyth Rosin'
                                   )));

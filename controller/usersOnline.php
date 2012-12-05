@@ -2,7 +2,7 @@
 
 class UsersOnline {
   
-  public function action($args, $forceResponse) {
+  public function action($args, $lazy = false) {
     if (isset($args->filter)) {
       return array('foo' => '10');
     }
