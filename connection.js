@@ -80,6 +80,7 @@ var connection = (function () {
                     var v = a[k],
                         s = subscriptions[k],
                         c = callbacks[k];
+						v.userName = json.userName;
                     if (s) {
                         s.callback(v);
                     } else if (c) {
@@ -94,7 +95,7 @@ var connection = (function () {
         
         if (Object.keys(data).length > 0) {
             $.ajax({
-                url: 'index.php',
+                url: 'ajax.php',
                 dataType: 'json',
                 type: 'POST',
                 data: {

@@ -1,0 +1,327 @@
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, figure, footer, header,  hgroup, menu, nav, section, menu, time, mark, audio, video {margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent;}
+
+html {
+	height: 100%;
+}
+
+body {
+	background: #fff;
+	font-family: Arial;
+	height: 100%;
+}
+
+header {
+	background: #333;
+	background-image: url('texture2.png');
+	color: white;
+	overflow: visible;
+}
+
+	header div#userInfo img, header div#userInfo hgroup {
+		float: left;
+		margin: 10px;
+	}
+	
+		header div#userInfo hgroup {
+			margin-left: 0;
+		}
+	
+		header div#userInfo h3 {
+			font-weight: normal;
+		}
+	
+		header div#userInfo h4 {
+			margin-top: 6px;
+			font-weight: normal;
+			font-size: 12px;
+		}
+
+header div#emergency {
+	display: none;
+
+	text-transform: uppercase;
+
+	background: #e00;
+	color: #fff;
+	
+	width:	150px;
+	font-size: 20px;
+	text-align: center;
+	padding: 15px 30px;
+}
+
+	header div#emergency.active {
+		background: #f00;
+	}
+
+header div.status.selector .option {
+	width: 100px;
+	padding: 20px;
+	text-align: center;
+	border-left: 5px solid #ccc;
+	text-transform: uppercase;
+	background: #333;
+	background-image: url('texture2.png');
+	color: white;
+}
+
+	header div.status.selector .options .option {
+		border-bottom: 1px solid #222;
+		color: white;
+	}
+
+	header div.status.selector .option.free {
+		border-left: 5px solid #81ff7e;
+	}
+
+	header div.status.selector .option.busy {
+		border-left: 5px solid #ffee5d;
+	}
+
+	header div.status.selector .option.offDuty {
+		border-left: 5px solid #ff5151;
+	}
+
+	header div.status.selector .option.auto {
+		border-left: 5px solid #5bc7ff;
+	}
+
+	header div.status.selector .options .option.selected {
+		background: #444;
+		background-image: url('texture1.png');
+	}
+			
+section#schedule {
+	background: #333;
+	background-image: url('texture2.png');
+	width: 200px;
+	position: absolute;
+	top: 60px;
+	bottom: 0;
+	left: 0;
+	overflow: hidden;
+}
+
+	section#schedule .sorting.selector {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		z-index: 2;
+		background-image: url('texture2.png');
+	}
+
+	section#schedule .sorting.selector .option {
+		width: 200px;
+		padding: 5px 0;
+		text-align: center;
+		color: white;
+		border-bottom: 1px solid #222;
+		border-top: 1px solid #222;
+		background-image: url('ddArrow.png');
+		background-position: 180px 7px;
+		background-repeat: no-repeat;
+	}
+	
+		section#schedule .sorting.selector .options .option {
+			background: #333;
+			background-image: url('texture2.png');
+			border-top: none;
+		}
+
+		section#schedule .sorting.selector .options .option.selected {
+			background: #444;
+			background-image: url('texture1.png');
+		}
+
+	section#schedule .scheduleItem {
+		color: white;
+		background: #333;
+		background-image: url('texture2.png');
+		/*border-left: 10px solid #333;*/
+		padding: 10px 10px 10px 20px;
+		position: relative;
+	}
+	
+		section#schedule .scheduleItem .statusIndicator {
+			position: absolute;
+			top: 10px;
+			bottom: 10px;
+			left: 7px;
+			width: 4px;
+			background: white;
+			-moz-border-radius: 2px;
+			border-radius: 2px;
+		}
+		
+			section#schedule .scheduleItem.green .statusIndicator {
+				background: #81ff7e;
+			}
+
+			section#schedule .scheduleItem.yellow .statusIndicator {
+				background: #ffee5d;
+			}
+
+			section#schedule .scheduleItem.red .statusIndicator {
+				background: #ff5151;
+			}
+
+		section#schedule .scheduleItem:nth-child(odd) {
+			background: #444;
+			background-image: url('texture1.png');
+		}
+
+		section#schedule .scheduleItem.green {
+			border-left-color: #81ff7e;
+		}
+
+		section#schedule .scheduleItem.yellow {
+			border-left-color: #ffee5d;
+		}
+
+		section#schedule .scheduleItem.red {
+			border-left-color: #ff5151;
+		}
+
+		section#schedule .scheduleItem.selected {
+			color: black;
+			background: white;
+		}
+		
+		section#schedule .scheduleItem .time, section#schedule .scheduleItem .date {
+			float: left;
+			font-size: 14px;
+			color: #aaa;
+		}
+		
+		section#schedule .scheduleItem .time {
+			float: right;
+		}
+		
+		section#schedule .scheduleItem h1 {
+			clear: both;
+			font-weight: normal;
+			font-size: 18px;
+			float: left;
+			display: block;
+			padding: 10px 0;
+		}
+		
+		section#schedule .scheduleItem .address {
+			clear: both;
+		}
+		
+		section#schedule .scrollbox, section#schedule .viewport {
+			position: absolute;
+			top: 30px;
+			bottom: 0;
+			left: 0;
+			right: 0;
+		}
+		
+		section#schedule  .scrollbox{
+			overflow: scroll;
+		}
+		
+		section#schedule .scrollbox::-webkit-scrollbar { 
+			display: none; 
+		}
+		
+section#main {
+	padding-left: 200px;
+}
+
+	div#patientInfo header {
+		background: white;
+		color: black;
+		overflow: hidden;
+		padding: 10px;
+	}
+	
+		div#patientInfo header h1 {
+			font-size: 32px;
+			font-weight: normal;
+		}
+	
+		div#patientInfo header h2 {
+			font-size: 26px;
+			font-weight: normal;
+		}
+
+		div#patientInfo header img, div#patientInfo header hgroup {
+			float: left;
+			margin-right: 10px;
+		}
+		
+.tabPane {
+	margin-left: 10px;
+}
+
+	.tabPane .tabs {
+		overflow: hidden;
+	}
+	
+		.tabPane .tabs .tab {
+			float: left;
+			padding: 5px 15px;
+			background: #ddd;
+			-moz-border-radius: 10px 10px 0 0;
+			border-radius: 10px 10px 0 0;
+			margin-top: 3px;
+			cursor: pointer;
+			border-top: 1px solid #ccc;
+			border-left: 1px solid #ccc;
+			border-right: 1px solid #ccc;
+		}
+	
+			.tabPane .tabs .tab.selected {
+				background: #f7f7f7;
+				color: black;
+				border-color: #ddd;
+				margin-top: 0;
+				padding-bottom: 8px;
+			}
+	
+	.tabPane .contents {
+		background: #f7f7f7;
+		border-left: 1px solid #ddd;
+	}
+	
+		.tabPane .contents .content {
+			padding: 10px;
+		}
+	
+			.tabPane .contents .content.selected {
+			}
+		
+
+.left{
+	float: left;
+}
+
+.right{
+	float: right;
+}
+
+.center{
+	margin: 0 auto;
+}
+
+.clear {
+	clear: both;
+}
+
+
+
+.selector {
+	position: relative;
+	cursor: pointer;
+}
+
+.selector .options {
+	display: none;
+	position: absolute;
+	-moz-box-shadow: 0 2px 3px 0 #222;
+	-webkit-box-shadow: 0 2px 3px 0 #222;
+	box-shadow: 0 2px 3px 0 #222;
+}

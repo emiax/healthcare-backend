@@ -114,12 +114,14 @@ class Request {
    * Return a json formatted error to the browser
    */
   private function throwError($str) {
-    die(json_encode(
-                    array(
-                          'success' => 'false',
-                          'error' => $str
-                          )
-                    )
-        );
+    $data = array(
+                  'success' => 'false',
+                  'error' => $str,
+                  );
+    if ($this->session) {
+      $data['channel'] = $this->session->getChannelId();
+    }
+    
+    die(json_encode($data));
   }
 }

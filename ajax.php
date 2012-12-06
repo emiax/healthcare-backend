@@ -13,6 +13,8 @@ include 'request.php';
 
 include 'controller/controller.php';
 include 'controller/logIn.php';
+
+include 'controller/getStatus.php';
 include 'controller/usersOnline.php';
 include 'controller/getEmployees.php';
 include 'controller/getSchedule.php';
@@ -24,6 +26,14 @@ include 'controller/getReports.php';
  * Sample input:
  * channel = 71,
  * request = {
+ * Setup session and channel
+*/
+
+
+/*
+ * Sample input:
+ * channel = 71,
+ * get = {
  *  "1": { "action": "login",
  *    "args": {"username": "johndoe", "password": "trollolloll"}
  *  }, 

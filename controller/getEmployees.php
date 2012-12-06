@@ -2,7 +2,7 @@
 
 class GetEmployees implements Controller {
   
-  public function action($args, $lazy) {
+  public function action($args, $lazy = false) {
     
     $session = Session::getInstance();
     if (!$session->getUserName()) {
