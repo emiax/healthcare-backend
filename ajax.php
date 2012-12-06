@@ -13,6 +13,7 @@ include 'request.php';
 
 include 'controller/controller.php';
 include 'controller/logIn.php';
+include 'controller/logOut.php';
 
 include 'controller/getStatus.php';
 include 'controller/usersOnline.php';

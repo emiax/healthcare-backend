@@ -8,6 +8,7 @@
 		<script type="text/javascript" src="connection.js"></script>
 		<script type="text/javascript" src="element.js"></script>
 		<script type="text/javascript" src="app.js"></script>
+		<script type="text/javascript" src="login.js"></script>
 		<script type="text/javascript" src="appHeader.js"></script>
 		<script type="text/javascript" src="schedule.js"></script>
 		<script type="text/javascript" src="mainWindow.js"></script>

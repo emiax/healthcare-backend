@@ -82,7 +82,6 @@ var connection = (function () {
                     var v = a[k],
                         s = subscriptions[k],
                         c = callbacks[k];
-						v.userName = json.userName;
                     if (s) {
                         s.callback(v);
                     } else if (c) {
