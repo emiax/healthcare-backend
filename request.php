@@ -28,7 +28,7 @@ class Request {
       if ($requests === null) {
         $this->throwError("malformed json in request");
       } else {
-        $this->requests = (array) $requests;
+        $this->requests = $requests;
       }
     }
     
@@ -48,10 +48,10 @@ class Request {
     $responses = array();
 
     // Perform the requests in reverse order to make sure previous subscriptions are handled after explicit request
-    $keys = array_reverse(array_keys($this->requests));
-    
+    $keys = array_keys((array) $this->requests);
+
     foreach($keys as $k) {
-      $req = $this->requests[$k];
+      $req = $this->requests->$k;
       $lazy = isset($req->lazy) && $req->lazy;
       $action = &$req->action;
       $args = &$req->args;
