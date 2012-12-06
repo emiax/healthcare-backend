@@ -13,6 +13,7 @@ include 'session.php';
 
 include 'controller/controller.php';
 include 'controller/logIn.php';
+include 'controller/getStatus.php';
 include 'controller/usersOnline.php';
 include 'controller/getEmployees.php';
 include 'controller/getSchedule.php';

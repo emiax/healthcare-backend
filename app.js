@@ -1,8 +1,8 @@
 ﻿FT.App = function() {
 
 	connection.request({
-		action: 'logIn',
-		args: {userName: 'tomfo', password: 'test'},
+		action: 'getStatus',
+		args: {},
 		callback: function (data) {
 			console.log("login data");
 			console.log(data);
