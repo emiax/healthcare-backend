@@ -10,6 +10,7 @@ class Session {
 
   private $nextChannelId = 0;
 
+  private $userName = '';
 
   /*
    * Create a new session. Happens when a new broswer is connecting (tabs may share session)
