@@ -47,7 +47,11 @@ class Request {
   public function respond() {
     $responses = array();
 
-    foreach($this->requests as $k => $req) {
+    // Perform the requests in reverse order to make sure previous subscriptions are handled after explicit request
+    $keys = array_reverse(array_keys($this->requests));
+    
+    foreach($keys as $k) {
+      $req = $this->requests[$k];
       $lazy = isset($req->lazy) && $req->lazy;
       $action = &$req->action;
       $args = &$req->args;
