@@ -1,4 +1,5 @@
 FT.Schedule = function() {
+	var scope = this;
 	this.sub = connection.subscribe({
 		action: 'getSchedule',
 		args: {
@@ -6,9 +7,9 @@ FT.Schedule = function() {
 			future : true
 		},
 		callback: function(data) {
-			this.build(data);
+			scope.build(data);
 		}
-	});
+	}, true);
 };
 
 FT.Schedule.prototype = new FT.Element("section");

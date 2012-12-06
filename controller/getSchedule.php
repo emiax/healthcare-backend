@@ -1,8 +1,8 @@
 <?php
 
-class GetSchedule {
+class GetSchedule implements Controller {
   
-  public function action($args) {
+  public function action($args, $lazy = false) {
     $session = Session::getInstance();
     $userName = $session->getUserName();
     
