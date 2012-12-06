@@ -70,7 +70,6 @@ class Request {
     $json = array();
     $session = $this->session;
     $json['channel'] = $session->getChannelId();
-    $json['userName'] = $session->getUserName();
     $json['response'] = $responses;
     return json_encode($json);
   }

@@ -60,6 +60,8 @@ class Session {
     if (!is_numeric($channelId) || $channelId < 1) {
       $channelId = $this->nextChannelId++;      
     }
+
+    $channelId = (int) $channelId;
     
     if (!isset($channels[$channelId])) {
       $channel = &$channels[$channelId];
