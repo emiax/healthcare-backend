@@ -51,7 +51,7 @@ class VisitMapper {
                     );
     
     if ($future) {
-      $q .= ' AND v.datetime > :now';
+      $q .= ' AND v.end > :now';
       $params['now'] = $db->sqlDatetime(mktime());
     }
     

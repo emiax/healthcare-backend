@@ -12,7 +12,7 @@ var connection = (function () {
 
     var hasFocus = true;
 
-    that.subscribe = function (a) {
+    that.subscribe = function (a, instant) {
         var id = nextId,
             s = {
                 action: a.action,
@@ -26,6 +26,8 @@ var connection = (function () {
         subscriptions[id] = s;
         nextId++;
         
+		if (instant) that.requestMultiple([]);
+		
         return s;
     };
     

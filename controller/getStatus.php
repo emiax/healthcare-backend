@@ -1,8 +1,8 @@
 <?php
 
-class GetStatus {
+class GetStatus implements Controller {
   
-	public function action($args) {
+	public function action($args, $lazy = false) {
 		$session = Session::getInstance();
 		$userName = $session->getUserName();
 
