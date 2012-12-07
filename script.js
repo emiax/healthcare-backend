@@ -1,4 +1,4 @@
-$(document).ready(function() {
+﻿$(document).ready(function() {
 
 	$("body").click(function(e) {
 		if (!$(e.target).hasClass("option")) $(".options").hide();

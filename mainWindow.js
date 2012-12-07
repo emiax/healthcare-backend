@@ -1,5 +1,6 @@
-FT.MainWindow = function() {
+﻿FT.MainWindow = function() {
+	FT.Element.call(this, "section");
 
 };
 
-FT.MainWindow.prototype = new FT.Element("section");
+FT.MainWindow.prototype = new FT.Element();

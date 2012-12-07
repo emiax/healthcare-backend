@@ -1,4 +1,5 @@
 FT.Login = function() {
+	FT.Element.call(this, "section", "", "login");
 
 	var scope = this;
 
@@ -15,11 +16,7 @@ FT.Login = function() {
 	this.form.submit(function() {
 		connection.request({
 			action: 'logIn',
-			args: {userName: scope.username.val(), password: scope.password.val()},
-			callback: function (data) {
-				console.log("login data");
-				console.log(data);
-			}
+			args: {userName: scope.username.val(), password: scope.password.val()}
 		});
 		return false;
 	});
@@ -28,4 +25,4 @@ FT.Login = function() {
 
 };
 
-FT.Login.prototype = new FT.Element("section", "", "login");
+FT.Login.prototype = new FT.Element();
