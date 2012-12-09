@@ -37,7 +37,7 @@ class VisitMapper {
                  v.end AS end,
                  v.description AS description,
 
-                 v.patient AS patient,
+                 v.patient,
 
                  p.firstName AS firstName,
                  p.lastName AS lastName,
@@ -54,10 +54,10 @@ class VisitMapper {
                  
                  (
                    SELECT status FROM (
-                     (SELECT status, datetime FROM visit_report ORDER BY datetime DESC LIMIT 1)
+                     (SELECT status, patient, datetime FROM visit_report vr JOIN visit w ON w.id = vr.visit)
                      UNION 
-                     (SELECT status, datetime FROM report ORDER BY datetime DESC LIMIT 1)
-                   ) AS a ORDER BY datetime DESC LIMIT 1
+                     (SELECT status, patient, datetime FROM report r)
+                   ) AS a WHERE patient = v.patient ORDER BY datetime DESC LIMIT 1
                  ) AS status
           FROM visit v
           JOIN _patient p ON v.patient = p.id
@@ -129,7 +129,6 @@ class VisitMapper {
                               );
       }
       
-
       return $structure;
     } else {
       return array();

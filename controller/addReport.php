@@ -10,7 +10,7 @@ class AddReport implements Controller {
     $datetime = mktime();
 
     $patient = &$args->patient;
-    $employee = &$args->employee;
+    $employee = $session->getUsername();
     $visit = &$args->visit;
 
     $text = &$args->text;
@@ -25,16 +25,21 @@ class AddReport implements Controller {
                    );
     }
     if (isset($visit)) {
-      if ($rm->addVisitReport($status, $text, $datetime, $visit)) {
+      try {
+        $rm->addVisitReport($status, $text, $datetime, $visit);
         return array('success' => true);
+      } catch (Exception $e) {
+        return array('success' => false);
       }
     } elseif (isset($employee) && isset($patient)) {
-      if ($rm->addReport($status, $text, $datetime, $patient, $employee)) {
+      try {
+        $rm->addReport($status, $text, $datetime, $patient, $employee);
         return array('success' => true);
+      } catch (Exception $e) {
+        return array('success' => false);
       }
     }
-    
-    return array('success' => false);
+    return array('success' => false);    
   }
 
 }
