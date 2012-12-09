@@ -1,8 +1,11 @@
-﻿FT.AppHeader = function() {
+﻿FT.AppHeader = function(user) {
 	FT.Element.call(this, "header");
 
 	this.userInfo = $('<div class="left" id="userInfo">');
 	this.statusWrapper = $('<div class="right" id="statusWrapper">');
+	
+	this.userInfo.append(user.username);
+	
 	this.html.append(this.userInfo);
 	this.html.append(this.statusWrapper);
 	this.html.append($('<div class="clear">'));
