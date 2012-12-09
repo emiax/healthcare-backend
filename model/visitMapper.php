@@ -35,7 +35,8 @@ class VisitMapper {
     $q = 'SELECT v.id AS id,
                  v.start AS start,
                  v.end AS end,
-                 
+                 v.description AS description,
+
                  v.patient AS patient,
 
                  p.firstName AS firstName,
@@ -74,6 +75,19 @@ class VisitMapper {
       $params['nowPast'] = $db->sqlDatetime(mktime());
     }
 
+    
+    $q .= ' ORDER BY start';
+    if ($past) {
+      $q .= ' DESC';
+    } else {
+      $q .= ' ASC';
+    }
+    
+    // Limit number of future or past visits to 50
+    if (!isset($date) && ($future || $past)) {
+      $q .= ' LIMIT 50';
+    }
+
     $q .= ';';
 
     $result = $db->query($q, $params);
@@ -88,10 +102,9 @@ class VisitMapper {
 
         $k = array();
         $k['id'] = $v['id'];
-        $k['start'] = $v['start'];
-        $k['end'] = $v['end'];
-
-
+        $k['start'] = $db->jsonDateTime($v['start']);
+        $k['end'] = $db->jsonDateTime($v['end']);
+        $k['description'] = htmlspecialchars($v['description']);
 
         $k['patient'] = array(
                               'id' => $v['id'],
@@ -103,7 +116,7 @@ class VisitMapper {
                               'homeTelephone' => $v['homeTelephone'],
                               'mobileTelephone' => $v['mobileTelephone'],
                               'familyTelephone' => $v['familyTelephone'],
-                              'address' => $v['address']
+                              'address' =>  htmlspecialchars($v['address'])
                               );
       }
       

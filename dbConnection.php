@@ -39,6 +39,8 @@ class DbConnection {
                          ';dbname=' . $config->databaseName ,
                          $config->userName,
                          $config->password);
+
+    $this->query("SET NAMES 'utf8';", array());
   }
 
 
@@ -66,6 +68,20 @@ class DbConnection {
    */
   public function sqlDatetime($epoch) {
     return date("Y-m-d H:i:s", $epoch);
+  }
+  
+  
+  public function jsonDateTime($sqlDate) {
+    return array(
+                 'year' => (int) substr($sqlDate, 0, 4),
+                 'month' => (int) substr($sqlDate, 5, 2),
+                 'day' => (int) substr($sqlDate, 8, 2),
+                 
+                 'hour' => (int) substr($sqlDate, 11, 2),
+                 'minute' => (int) substr($sqlDate, 14, 2),
+                 'second' => (int) substr($sqlDate, 17, 2)
+                              
+                 );
   }
 
 
