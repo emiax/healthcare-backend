@@ -6,9 +6,9 @@ class GetStatus implements Controller {
 		$session = Session::getInstance();
 		$username = $session->getUsername();
                 
-                //if ($lazy && !$session->updateState('getStatusUsername', $username)) {
-                //  return;
-                //}
+                if ($lazy && !$session->updateState('getStatusUsername', $username)) {
+                  return;
+                }
 
                 $response = array(
                                   'success' => true,

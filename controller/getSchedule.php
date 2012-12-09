@@ -13,7 +13,6 @@ class GetSchedule implements Controller {
     }
     
     $date = null;
-   
     
     $day = &$args->date->day;
     $month = &$args->date->month;
@@ -27,14 +26,14 @@ class GetSchedule implements Controller {
       $day = isset($day) ? $day : date('j');
       $month = isset($month) ? $month : date('n');
       $year = isset($year) ? $year : date('Y');
-      //$date = mktime(date("H"), date("i"), date("s"), $month, $day, $year);
+      $date = mktime(date("H"), date("i"), date("s"), $month, $day, $year);
     }
     
     if (isset($relativeDay) || isset($relativeMonth) || isset($relativeYear)) {
       $day = isset($day) ? $day + $relativeDay : isset($relativeDay) ? date('j') + $relativeDay : date('j');
       $month = isset($month) ? $month + $relativeMonth : isset($relativeMonth) ? date('n') + $relativeMonth : date('n');
       $year = isset($year) ? $year + $relativeYear : isset($relativeYear) ? date('Y') + $relativeYear : date('Y');
-      //$date = mktime(date("H"), date("i"), date("s"), $month, $day, $year);
+      $date = mktime(date("H"), date("i"), date("s"), $month, $day, $year);
     }
 
     $future = isset($args->future) && $args->future;
@@ -52,13 +51,9 @@ class GetSchedule implements Controller {
       $filter['date'] = $date;
     }
     
-    //    print_r($filter);
-    
     if (empty($filter)) {
       $filter['date'] = mktime();
     }
-
-    //    print_r($filter);
 
     if ($username) {
       $vm = VisitMapper::getInstance();

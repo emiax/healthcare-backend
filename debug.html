@@ -11,22 +11,22 @@
      <script>
        
        //login!
-       connection.request({
+     /*  connection.request({
          action: 'logIn',
          args: {username: 'emiax', password: 'test'},
          callback: function (data) {
             console.log("login data");
             console.log(data);
          }
-       });
+       }); */
 
 
        setTimeout(function () {
           sub = connection.subscribe({
-             action: 'getSchedule',
-             args: {past: true},
+             action: 'getStatus',
+//             args: {past: true},
              callback: function(data) {
-                console.log("schedule data: ");
+                console.log("status data: ");
                 console.log(data);
              }
           })

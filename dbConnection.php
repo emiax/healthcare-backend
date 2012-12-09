@@ -57,7 +57,7 @@ class DbConnection {
    * SQL formatted date
    */
   public function sqlDate($epoch) {
-    return date("Y-d-m", $epoch);
+    return date("Y-m-d", $epoch);
   }
 
 
@@ -65,7 +65,7 @@ class DbConnection {
    * SQL formatted datetime
    */
   public function sqlDatetime($epoch) {
-    return date("Y-d-m H:i:s", $epoch);
+    return date("Y-m-d H:i:s", $epoch);
   }
 
 
