@@ -66,21 +66,27 @@ class DbConnection {
   /*
    * SQL formatted datetime
    */
-  public function sqlDatetime($epoch) {
+  public function sqlDateTime($input) {
+    if (is_object($input) && isset($input->year) && isset($input->month) && isset($input->day)
+        && isset($input->hour) && isset($input->minute) && isset($input->second)) {
+      $epoch= mktime($input->hour, $input->minute, $input->second, $input->month, $input->day, $input->year);
+    } else {
+      $epoch = $input;
+    }
+    
     return date("Y-m-d H:i:s", $epoch);
   }
+
   
-  
-  public function jsonDateTime($sqlDate) {
+  public function jsonDateTime($sqlDateTime) {
     return array(
-                 'year' => (int) substr($sqlDate, 0, 4),
-                 'month' => (int) substr($sqlDate, 5, 2),
-                 'day' => (int) substr($sqlDate, 8, 2),
+                 'year' => (int) substr($sqlDateTime, 0, 4),
+                 'month' => (int) substr($sqlDateTime, 5, 2),
+                 'day' => (int) substr($sqlDateTime, 8, 2),
                  
-                 'hour' => (int) substr($sqlDate, 11, 2),
-                 'minute' => (int) substr($sqlDate, 14, 2),
-                 'second' => (int) substr($sqlDate, 17, 2)
-                              
+                 'hour' => (int) substr($sqlDateTime, 11, 2),
+                 'minute' => (int) substr($sqlDateTime, 14, 2),
+                 'second' => (int) substr($sqlDateTime, 17, 2)
                  );
   }
 
@@ -105,11 +111,7 @@ class DbConnection {
     $executed = $pdoStatement->execute($paramsWithColons);
     if ($executed) {
       $result = $pdoStatement->fetchAll(PDO::FETCH_ASSOC);
-      if (!$result) {
-        return true;
-      } else {
-        return $result;
-      }
+      return $result;
     } else {
       $debug = array(
                      //  'preQuery' => $statement,

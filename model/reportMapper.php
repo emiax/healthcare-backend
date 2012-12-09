@@ -73,7 +73,7 @@ class ReportMapper {
   /*
    * Return reports fullfilling a $filter, and sorted accordingly to $sort
    */
-  public function getReports($filter, $order = null) {
+  public function getReports($filter, $order = null, $limit = 50) {
     $db = DbConnection::getInstance();
     
     $q = 'SELECT id,
@@ -90,16 +90,16 @@ class ReportMapper {
                  v.employee,
                  r.status,
                  r.text,
-                 r.datetime
+                 r.datetime,
                  "visit" AS type
           FROM visit_report r
           JOIN visit v ON r.visit = v.id';
 
     if (isset($filter['after'])) {
-      $after = $db->sqlTime($filter['after']);
+      $after = $db->sqlDateTime($filter['after']);
     }
     if (isset($filter['before'])) {
-      $before = $db->sqlTime($filter['before']);
+      $before = $db->sqlDateTime($filter['before']);
     }
     
     $patient = &$filter['patient'];
@@ -108,51 +108,71 @@ class ReportMapper {
 
     $params = array();
     
-    $qWhere = ' WHERE 1 ';
-    $rWhere = ' WHERE 1 ';
-
+    $qWhere = 'WHERE 1 ';
+    $rWhere = 'WHERE 1 ';
+    
     if (isset($after)) {
-      $qWhere .= 'AND datetime > :after ';
-      $rWhere .= 'AND v.end > :after ';
-      $params['after'] = $after;
+      $qWhere .= 'AND datetime > :qAfter ';
+      $rWhere .= 'AND v.end > :rAfter ';
+      $params['rAfter'] = $params['qAfter'] = $after;
     }
     
     if (isset($before)) {
-      $qWhere .= 'AND datetime < :before ';
-      $rWhere .= 'AND v.start < :before ';
-      $params['before'] = $before;
+      $qWhere .= 'AND datetime < :qBefore ';
+      $rWhere .= 'AND v.start < :rBefore ';
+      $params['rBefore'] = $params['qBefore'] = $before;
     }
     
     if (isset($employee)) {
-      $qWhere .= 'AND employee = :employee ';
-      $rWhere .= 'AND v.employee = :employee';
-      $parms['employee'] = $employee;
-
+      $qWhere .= 'AND employee = :qEmployee ';
+      $rWhere .= 'AND v.employee = :qEmployee';
+      $params['rEmployee'] = $params['qEmployee'] = $employee;
     }
 
     if (isset($patient)) {
-      $qWhere .= 'AND patient = :patient ';
-      $rWhere .= 'AND v.patient = :patient ';
-      $parms['patient'] = $patient;
+      $qWhere .= 'AND patient = :qPatient ';
+      $rWhere .= 'AND v.patient = :rPatient ';
+      $parms['rPatient'] = $parms['qPatient'] = $patient;
+
     }
     
     if (isset($status)) {
-      $qWhere .= 'AND status = :status ';
-      $rWhere .= 'AND r.status = :status ';
-      $params['status'] = $status;
-    }
+      $qWhere .= 'AND status = :qStatus ';
+      $rWhere .= 'AND r.status = :rStatus ';
+      $params['rStatus'] = $params['qStatus'] = $status;
+      }
 
-    $query = "$q $qWhere UNION $r $rWhere"; 
+    $query = "($q $qWhere) UNION ($r $rWhere)"; 
 
-    if (isset($order)) {
-      $query .= 'ORDER BY ' . implode(', ', $order) . ";";
+    if (!empty($order)) {
+      $query .= ' ORDER BY ' . implode(', ', $order) . ";";
     } else {
-      $query .= 'ORDER BY time';
+      $query .= ' ORDER BY datetime';
+    }
+    
+    $limit = (int) $limit;
+    if ($limit) {
+      $query .= "LIMIT $limit";
     }
 
-    print_r($q);
+    $res = $db->query($query, $params);
+    $structure = array();
 
-    return $db->query($q, $params);
+    $res = array_reverse($res);
+    foreach($res as $r => $v) {
+      $k = &$structure[$r];
+      $k = array(
+                 'id' => $v['id'],
+                 'patient' => $v['patient'],
+                 'employee' => $v['employee'],
+                 'status' => $v['status'],
+                 'text' => $v['text'],
+                 'datetime' => $db->jsonDateTime($v['datetime']),
+                 'type' => $v['type']
+      );
+    }
+
+    return $structure;
   }
 
 }

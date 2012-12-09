@@ -48,9 +48,17 @@ class VisitMapper {
                  p.homeTelephone AS homeTelephone,
                  p.mobileTelephone AS mobileTelephone,
                  p.familyTelephone AS familyTelephone,
-                 p.address AS address,
+                 p.address AS address,                  
 
-                 (SELECT COUNT(*) FROM visit_report r WHERE r.visit = v.id) AS reported
+                 (SELECT COUNT(*) FROM visit_report r WHERE r.visit = v.id) AS reported,
+                 
+                 (
+                   SELECT status FROM (
+                     (SELECT status, datetime FROM visit_report ORDER BY datetime DESC LIMIT 1)
+                     UNION 
+                     (SELECT status, datetime FROM report ORDER BY datetime DESC LIMIT 1)
+                   ) AS a ORDER BY datetime DESC LIMIT 1
+                 ) AS status
           FROM visit v
           JOIN _patient p ON v.patient = p.id
 
@@ -116,7 +124,8 @@ class VisitMapper {
                               'homeTelephone' => $v['homeTelephone'],
                               'mobileTelephone' => $v['mobileTelephone'],
                               'familyTelephone' => $v['familyTelephone'],
-                              'address' =>  htmlspecialchars($v['address'])
+                              'address' =>  htmlspecialchars($v['address']),
+                              'status' => $v['status']
                               );
       }
       
