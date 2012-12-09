@@ -5,6 +5,7 @@ ini_set("display_errors", 1);
 
 include 'dbConnection.php';
 include 'model/employeeMapper.php';
+include 'model/patientMapper.php';
 include 'model/visitMapper.php';
 include 'model/reportMapper.php';
 

@@ -35,10 +35,20 @@ class VisitMapper {
     $q = 'SELECT v.id AS id,
                  v.start AS start,
                  v.end AS end,
+                 
                  v.patient AS patient,
+
                  p.firstName AS firstName,
                  p.lastName AS lastName,
+                 p.profilePicture AS profilePicture,
+                 p.personalNumber AS personalNumber,
+                 p.weight AS weight,
+                 p.height AS height,
+                 p.homeTelephone AS homeTelephone,
+                 p.mobileTelephone AS mobileTelephone,
+                 p.familyTelephone AS familyTelephone,
                  p.address AS address,
+
                  (SELECT COUNT(*) FROM visit_report r WHERE r.visit = v.id) AS reported
           FROM visit v
           JOIN _patient p ON v.patient = p.id
@@ -67,8 +77,38 @@ class VisitMapper {
     $q .= ';';
 
     $result = $db->query($q, $params);
+    $structure = array();
+
+    $pm = PatientMapper::getInstance();
+
     if (is_array($result)) {
-      return $result;
+      
+      foreach($result as $r => $v) {
+        $k = &$structure[$r];
+
+        $k = array();
+        $k['id'] = $v['id'];
+        $k['start'] = $v['start'];
+        $k['end'] = $v['end'];
+
+
+
+        $k['patient'] = array(
+                              'id' => $v['id'],
+                              'firstName' => $v['firstName'],
+                              'lastName' => $v['lastName'],
+                              'profilePicture' => $v['profilePicture'],
+                              'age' => $pm->getAgeFromPersonalNumber($v['personalNumber']),
+                              'weight' => $v['weight'],
+                              'homeTelephone' => $v['homeTelephone'],
+                              'mobileTelephone' => $v['mobileTelephone'],
+                              'familyTelephone' => $v['familyTelephone'],
+                              'address' => $v['address']
+                              );
+      }
+      
+
+      return $structure;
     } else {
       return array();
     }

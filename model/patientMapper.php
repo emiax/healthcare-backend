@@ -30,7 +30,7 @@ class PatientMapper {
   public static function getInstance() {
     $instance = &self::$instance;
     if (!$instance) {
-      $instance = new EmployeeMapper();
+      $instance = new PatientMapper();
     }
     return $instance;
   }
@@ -48,7 +48,17 @@ class PatientMapper {
     $q .= ");";
     return $db->query($q, $patient);    
   }
+  
+  public function getAgeFromPersonalNumber($personalNumber) {
+    $year = substr($personalNumber, 0, 4);
+    $month = substr($personalNumber, 4, 2);
+    $day = substr($personalNumber, 6, 2);
 
+    $birth = new DateTime("$year-$month-$day");
+    $now = new DateTime();
+
+    return $now->diff($birth)->y;
+  }
 
 
 

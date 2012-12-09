@@ -41,6 +41,7 @@ class DbConnection {
                          $config->password);
   }
 
+
   /*
    * Return instance
    */
@@ -50,7 +51,6 @@ class DbConnection {
     }
     return self::$instance;
   }
-
 
 
   /*
@@ -67,7 +67,6 @@ class DbConnection {
   public function sqlDatetime($epoch) {
     return date("Y-m-d H:i:s", $epoch);
   }
-
 
 
   /*
