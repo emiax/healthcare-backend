@@ -10,7 +10,7 @@ class Session {
 
   private $nextChannelId = 0;
 
-  private $userName = '';
+  private $username = '';
 
   /*
    * Create a new session. Happens when a new broswer is connecting (tabs may share session)
@@ -77,16 +77,16 @@ class Session {
   /*
    * Set user id. User id = 0 means no user is logged in
    */
-  public function setUserName($userName) {
-    $this->userName = $userName;
+  public function setUsername($username) {
+    $this->username = $username;
   }
   
 
   /*
    * Get user id
    */
-  public function getUserName() {
-    return $this->userName;
+  public function getUsername() {
+    return $this->username;
   }
 
 

@@ -19,7 +19,7 @@ class AddReport implements Controller {
       $status = 'neutral';
     }
     
-    if (!$session->getUserName()) {
+    if (!$session->getUsername()) {
       return array(
                    'succuss' => false
                    );

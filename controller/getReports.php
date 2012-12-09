@@ -5,7 +5,7 @@ class GetReports {
   public function action($args) {
     
     $session = Session::getInstance();
-    if (!$session->getUserName()) {
+    if (!$session->getUsername()) {
       return array(
                    'success' => 'false'
                    );

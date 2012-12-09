@@ -12,7 +12,7 @@ include 'session.php';
 echo "Registering!";
 $c = new RegisterEmployee();
 print_r($c->action((object) array(
-                          'userName' => 'tomfo',
+                          'username' => 'tomfo',
                           'password' => 'test',
                           'firstName' => 'Tomas',
                           'lastName' => 'Forsyth Rosin'

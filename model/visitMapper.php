@@ -25,10 +25,11 @@ class VisitMapper {
   }
 
 
-  public function getSchedule($userName, $filter) {
+  public function getSchedule($username, $filter) {
     
-    $date = $filter['date'];
+    $date = &$filter['date'];
     $future = isset($filter['future']) && $filter['future'];
+    $past = isset($filter['past']) && $filter['past'];
       
     $db = DbConnection::getInstance();
     $q = 'SELECT v.id AS id,
@@ -42,18 +43,27 @@ class VisitMapper {
           FROM visit v
           JOIN _patient p ON v.patient = p.id
 
-          WHERE v.employee = :userName
-          AND DATE(v.start) = :date';
+          WHERE v.employee = :username';
     
     $params = array(
-                    'userName' => $userName,
-                    'date' => $db->sqlDate($date)
+                    'username' => $username,
                     );
+
+    if (isset($date)) {
+      $q .= ' AND DATE(v.start) = :date';
+      $params['date'] = $db->sqlDate($date);
+    }
     
     if ($future) {
-      $q .= ' AND v.end > :now';
-      $params['now'] = $db->sqlDatetime(mktime());
+      $q .= ' AND v.end > :nowFuture';
+      $params['nowFuture'] = $db->sqlDatetime(mktime());
     }
+
+    if ($past) {
+      $q .= ' AND v.start < :nowPast';
+      $params['nowPast'] = $db->sqlDatetime(mktime());
+    }
+
     
     $q .= ';';
 

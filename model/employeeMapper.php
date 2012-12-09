@@ -2,7 +2,7 @@
 
 class EmployeeMapper {
 
-  private static $columns = array('userName',
+  private static $columns = array('username',
                         'firstName',
                         'lastName',
                         'password',
@@ -66,13 +66,13 @@ class EmployeeMapper {
     $db = DbConnection::getInstance();
     
     
-    $userName = &$employee['userName'];
+    $username = &$employee['username'];
     $password = &$employee['password'];
 
-    if (!isset($userName) || !isset($password)) {
+    if (!isset($username) || !isset($password)) {
       throw new Exception("Could not insert employee without username or password");
     }
-    $password = $this->encryptPassword($userName, $password);
+    $password = $this->encryptPassword($username, $password);
     
 
     $q = 'INSERT INTO employee ('; 
@@ -85,8 +85,8 @@ class EmployeeMapper {
     return $db->query($q, $employee);    
   }
   
-  private function encryptPassword($userName, $password) {
-    return sha1($userName . "$5¤" . $password);
+  private function encryptPassword($username, $password) {
+    return sha1($username . "$5¤" . $password);
   }
 
 
@@ -100,10 +100,10 @@ class EmployeeMapper {
     $q = 'SELECT ' . implode(', ', $publicColumns) . ' FROM employee WHERE 1 ';
     
     if (isset($filter['password'])) {
-      if (isset($filter['userName'])) {
-        $filter['password'] = $this->encryptPassword($filter['userName'], $filter['password']);
+      if (isset($filter['username'])) {
+        $filter['password'] = $this->encryptPassword($filter['username'], $filter['password']);
       } else {
-        throw new Exception("Cannnot filter by password without specifying userName");
+        throw new Exception("Cannnot filter by password without specifying username");
       }
     }
     
@@ -120,19 +120,19 @@ class EmployeeMapper {
     }
   }
 
-  public function getEmployee($userName) {
-    $employees = $this->getEmployees(array('userName' => $userName));
+  public function getEmployee($username) {
+    $employees = $this->getEmployees(array('username' => $username));
     $emp = &$employees[0];
     if (isset($employee)) {
       return $employee;
     }
   }
 
-  public function getNotes($userName) {
-    $q = 'SELECT id, text from note WHERE employee = :userName';
+  public function getNotes($username) {
+    $q = 'SELECT id, text from note WHERE employee = :username';
     $db = DbConnection::getInstance();
     
-    return $db->query($q, array("userName" => $userName));
+    return $db->query($q, array("username" => $username));
   }
 
   
