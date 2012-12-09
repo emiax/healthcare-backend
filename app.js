@@ -1,11 +1,11 @@
 ﻿FT.App = function() {
 	FT.Element.call(this, "body");
 
-	var scope = this;
 	this.loggedIn = undefined;
 	this.html = $("body");
 	
 	this.user = null;
+	var scope = this;
 	
 	var refresh = $('<div style="position: absolute; top: 0; right: 30px; z-index: 9999; width: 30px; height: 30px; background: #5bc7ff">');
 	refresh.click(function() {
@@ -43,9 +43,9 @@
 				scope.user = new FT.User(data);
 				
 				scope.loggedIn = true;
-				console.log("logged in : username = " + data.username);
+				console.log("logged in : username = " + scope.user.username);
 	
-				scope.header = new FT.AppHeader();
+				scope.header = new FT.AppHeader(scope.user);
 				scope.schedule = new FT.Schedule();
 				scope.main = new FT.MainWindow();
 				

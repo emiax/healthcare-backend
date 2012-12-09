@@ -1,6 +1,6 @@
 ﻿FT.User = function(args) {
 
-	this.userName = args.userName;
+	this.username = args.username;
 	this.firstName = args.firstName;
 	this.lastName = args.lastName;
 	
