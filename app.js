@@ -1,17 +1,23 @@
 ﻿FT.App = function() {
-
-	connection.request({
-		action: 'logOut',
-		args: {},
-		callback: function(data) {
-			console.log("logout");
-			console.log(data);
-		}
-	});
+	FT.Element.call(this, "body");
 
 	var scope = this;
 	this.loggedIn = undefined;
 	this.html = $("body");
+	
+	this.user = null;
+	
+	var refresh = $('<div style="position: absolute; top: 0; right: 30px; z-index: 9999; width: 30px; height: 30px; background: #5bc7ff">');
+	refresh.click(function() {
+		location.reload();
+	});
+	var logout = $('<div style="position: absolute; top: 0; right: 0; z-index: 9999; width: 30px; height: 30px; background: #ff5151">');
+	logout.click(function() {
+		connection.request({action: 'logOut'});
+	});
+	
+	this.html.append(refresh).append(logout);
+	
 	this.login = null;
 
 	connection.subscribe({
@@ -30,9 +36,12 @@
 				scope.detach(scope.main);
 				
 				scope.append(scope.login);
+				console.log(scope.login);
 			}
 			else if (data.username && scope.loggedIn !== true) {
 				//Load application
+				scope.user = new FT.User(data);
+				
 				scope.loggedIn = true;
 				console.log("logged in : username = " + data.username);
 	
@@ -50,4 +59,4 @@
 	}, true);
 };
 
-FT.App.prototype = new FT.Element("body");
+FT.App.prototype = new FT.Element();

@@ -114,6 +114,10 @@ var connection = (function () {
                            callback: a.callback
                           }]);
     };
+	
+	that.sync = function() {
+		that.requestMultiple([]);
+	}
 
     that.beginPolling = function(interval) {
         if (!begunPolling) {

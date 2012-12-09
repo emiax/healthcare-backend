@@ -1,4 +1,5 @@
 FT.Login = function() {
+	FT.Element.call(this, "section", "", "login");
 
 	var scope = this;
 
@@ -28,4 +29,4 @@ FT.Login = function() {
 
 };
 
-FT.Login.prototype = new FT.Element("section", "", "login");
+FT.Login.prototype = new FT.Element();
