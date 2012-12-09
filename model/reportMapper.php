@@ -74,6 +74,7 @@ class ReportMapper {
    * Return reports fullfilling a $filter, and sorted accordingly to $sort
    */
   public function getReports($filter, $order = null) {
+    $db = DbConnection::getInstance();
     
     $q = 'SELECT id,
                  patient,
@@ -148,6 +149,8 @@ class ReportMapper {
     } else {
       $query .= 'ORDER BY time';
     }
+
+    print_r($q);
 
     return $db->query($q, $params);
   }

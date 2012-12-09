@@ -1,8 +1,8 @@
 <?php
 
-class GetReports {
+class GetReports implements Controller {
   
-  public function action($args) {
+  public function action($args, $lazy = false) {
     
     $session = Session::getInstance();
     if (!$session->getUsername()) {
