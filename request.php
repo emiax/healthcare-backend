@@ -66,7 +66,7 @@ class Request {
       
       // Perform request and store state in session
       $res = $this->performRequest($action, $args, $lazy);
-      if ($this->session->updateState($k, json_encode($res)) || !$lazy) {
+      if ($res && $this->session->updateState($k, json_encode($res)) || !$lazy) {
         $responses[$k] = $res;
       }
     }

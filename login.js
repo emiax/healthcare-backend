@@ -16,7 +16,11 @@ FT.Login = function() {
 	this.form.submit(function() {
 		connection.request({
 			action: 'logIn',
-			args: {username: scope.username.val(), password: scope.password.val()}
+			args: {username: scope.username.val(), password: scope.password.val()},
+			callback: function (data) {
+				console.log("login data");
+				console.log(data);
+			}
 		});
 		return false;
 	});

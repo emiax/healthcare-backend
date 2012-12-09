@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Sample html client</title>
+    <meta charset="utf-8" />
+    <script src="http://code.jquery.com/jquery-1.5.min.js" type="text/javascript"></script>
+    <script src="connection.js"></script>
+    <script src="debug.js"></script>
+   </head>
+   <body>
+     <script>
+       
+       //login!
+       connection.request({
+         action: 'logIn',
+         args: {username: 'emiax', password: 'test'},
+         callback: function (data) {
+            console.log("login data");
+            console.log(data);
+         }
+       });
+
+
+       setTimeout(function () {
+          sub = connection.subscribe({
+             action: 'getSchedule',
+             args: {past: true},
+             callback: function(data) {
+                console.log("schedule data: ");
+                console.log(data);
+             }
+          })
+       }, 100);
+
+
+
+
+       // change subscription
+       setTimeout(function () {
+         sub.args = {
+            future: true
+         };
+       }, 15000);
+
+
+
+       // unsubscribe after a while
+       setTimeout(function () {
+           sub.unsubscribe();
+       }, 500000);
+
+
+
+     </script>
+     <input id="action"></input>
+     <textarea id="args"></textarea>
+     <button id="send">Skicka</button>
+     <div id="response"></div>       
+   </body>
+</html>

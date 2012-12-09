@@ -5,15 +5,15 @@ class LogIn implements Controller {
   public function action($args, $lazy = false) {
     
     $session = Session::getInstance();    
-    
-    if (isset($args->userName) && isset($args->password)) {
-      $userName = $args->userName;
+
+    if (isset($args->username) && isset($args->password)) {
+      $username = $args->username;
       $password = $args->password;
 
       
       $model = EmployeeMapper::getInstance();
       $employees = $model->getEmployees(array(
-                                          'userName' => $userName,
+                                          'username' => $username,
                                           'password' => $password
                                           ));
       
@@ -23,12 +23,12 @@ class LogIn implements Controller {
       if (count($employees) === 1) {
 
         $employee = $employees[0];
-        $session->setUserName($userName);
+        $session->setUsername($username);
         
 
         return array(
                      'success' => true,
-                     'userName' => $employee['userName'],
+                     'username' => $employee['username'],
                      'firstName' => $employee['firstName'],
                      'lastName' => $employee['lastName'],
                      'mobileTelephone' => $employee['mobileTelephone'],
@@ -37,7 +37,7 @@ class LogIn implements Controller {
                      'status' => $employee['status']
                      );
       } else {
-        $session->setUserName(null);
+        $session->setUsername('');
       }
       return array(
                    'success' => 'false'

@@ -7,8 +7,8 @@ class RegisterEmployee {
     $session = Session::getInstance();
     $errors = array();
 
-    if (!isset($args->userName)) {
-      $erorrs[] = "userName";
+    if (!isset($args->username)) {
+      $erorrs[] = "username";
     }
     if (!isset($args->password)) {
       $erorrs[] = "password";
@@ -37,7 +37,7 @@ class RegisterEmployee {
                    );
     }
 
-    $userName = $args->userName;
+    $username = $args->username;
     $password = $args->password;
     $firstName = $args->firstName;
     $lastName = $args->lastName;
@@ -48,7 +48,7 @@ class RegisterEmployee {
     $mapper = EmployeeMapper::getInstance();
     try {
       $inserted = $mapper->insertEmployee(array(
-                                                'userName' => $userName,
+                                                'username' => $username,
                                                 'password' => $password,
                                                 'firstName' => $firstName,
                                                 'lastName' => $lastName,
