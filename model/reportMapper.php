@@ -132,8 +132,7 @@ class ReportMapper {
     if (isset($patient)) {
       $qWhere .= 'AND patient = :qPatient ';
       $rWhere .= 'AND v.patient = :rPatient ';
-      $parms['rPatient'] = $parms['qPatient'] = $patient;
-
+      $params['rPatient'] = $params['qPatient'] = $patient;
     }
     
     if (isset($status)) {

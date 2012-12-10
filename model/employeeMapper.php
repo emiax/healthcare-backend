@@ -39,21 +39,24 @@ class EmployeeMapper {
   /*
    * Change status of employee
    */
-  public function setStatus($userId, $status) {
+  public function setStatus($username, $status) {
     $db = DbConnection::getInstance();
 
     switch($status) {
     case 'free':
     case 'busy':
     case 'offDuty':
-      $validStatus = $status;
+      break;
     default: 
-      $validStatus = 'auto';
+      return false;
     }
-
-    $db->query('UPDATE employee SET status = :status', array(
-                                                             'status' => $validStatus
-                                                             ));
+    
+    $db->query('UPDATE employee SET status = :status WHERE username = :username',
+               array(
+                     'status' => $status,
+                     'username' => $username
+                     ));
+    return true;
   }
 
   public function setLoggedIn($loggedIn = true) {

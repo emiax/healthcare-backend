@@ -17,6 +17,7 @@ include 'controller/logIn.php';
 include 'controller/logOut.php';
 
 include 'controller/getStatus.php';
+include 'controller/setStatus.php';
 include 'controller/usersOnline.php';
 include 'controller/getEmployees.php';
 include 'controller/getSchedule.php';

@@ -69,7 +69,6 @@ var connection = (function () {
         
         var onResponse = function(json) {
             var c = json.channel;
-
             
             if (typeof c !== 'undefined') {
                 channel = c;

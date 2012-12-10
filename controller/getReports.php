@@ -13,6 +13,12 @@ class GetReports implements Controller {
     $em = ReportMapper::getInstance();
 
     $filter = array();
+    
+    
+    if ($args && isset($args->patient)) {
+      $filter['patient'] = $args->patient;
+    }
+
     $order = array('datetime DESC');
     return $em->getReports($filter, $order, 50);
     

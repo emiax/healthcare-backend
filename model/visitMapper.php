@@ -37,7 +37,7 @@ class VisitMapper {
                  v.end AS end,
                  v.description AS description,
 
-                 v.patient,
+                 v.patient AS patient,
 
                  p.firstName AS firstName,
                  p.lastName AS lastName,
@@ -57,6 +57,8 @@ class VisitMapper {
                      (SELECT status, patient, datetime FROM visit_report vr JOIN visit w ON w.id = vr.visit)
                      UNION 
                      (SELECT status, patient, datetime FROM report r)
+                     UNION
+                     (SELECT "alert", patient, datetime FROM fall)
                    ) AS a WHERE patient = v.patient ORDER BY datetime DESC LIMIT 1
                  ) AS status
           FROM visit v
@@ -115,7 +117,7 @@ class VisitMapper {
         $k['description'] = htmlspecialchars($v['description']);
 
         $k['patient'] = array(
-                              'id' => $v['id'],
+                              'id' => $v['patient'],
                               'firstName' => $v['firstName'],
                               'lastName' => $v['lastName'],
                               'profilePicture' => $v['profilePicture'],

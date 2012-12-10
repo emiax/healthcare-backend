@@ -80,13 +80,13 @@ class DbConnection {
   
   public function jsonDateTime($sqlDateTime) {
     return array(
-                 'year' => (int) substr($sqlDateTime, 0, 4),
-                 'month' => (int) substr($sqlDateTime, 5, 2),
-                 'day' => (int) substr($sqlDateTime, 8, 2),
+                 'year' => substr($sqlDateTime, 0, 4),
+                 'month' => substr($sqlDateTime, 5, 2),
+                 'day' => substr($sqlDateTime, 8, 2),
                  
-                 'hour' => (int) substr($sqlDateTime, 11, 2),
-                 'minute' => (int) substr($sqlDateTime, 14, 2),
-                 'second' => (int) substr($sqlDateTime, 17, 2)
+                 'hour' => substr($sqlDateTime, 11, 2),
+                 'minute' => substr($sqlDateTime, 14, 2),
+                 'second' => substr($sqlDateTime, 17, 2)
                  );
   }
 
@@ -116,7 +116,7 @@ class DbConnection {
       $debug = array(
                      //  'preQuery' => $statement,
                      'parameters' => $parameters,
-                     'query' => str_replace(array_keys($paramsWithColons), array_values($paramsWithColons), $statement),
+                     //'query' => str_replace(array_keys($paramsWithColons), array_values($paramsWithColons), $statement),
                      'error' => print_r($pdoStatement->errorInfo(), true)
                      );
       
